@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   Calendar, 
   ChevronRight, 
@@ -115,6 +116,7 @@ const campaigns = [
 const AdCampaignsPanel = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const navigate = useNavigate();
   
   const filteredCampaigns = campaigns.filter(campaign => {
     const matchesSearch = campaign.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -157,7 +159,10 @@ const AdCampaignsPanel = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <h2 className="text-2xl font-bold">Ad Campaigns</h2>
-        <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600">
+        <Button 
+          className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+          onClick={() => navigate('/dashboard/campaigns/new')}
+        >
           <Plus className="mr-2 h-4 w-4" /> New Campaign
         </Button>
       </div>
@@ -323,11 +328,11 @@ const AdCampaignsPanel = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate(`/dashboard/campaigns/${campaign.id}`)}>
                             <Eye className="mr-2 h-4 w-4" />
                             <span>View Details</span>
                           </DropdownMenuItem>
-                          <DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => navigate(`/dashboard/campaigns/edit/${campaign.id}`)}>
                             <Edit className="mr-2 h-4 w-4" />
                             <span>Edit Campaign</span>
                           </DropdownMenuItem>
@@ -353,7 +358,11 @@ const AdCampaignsPanel = () => {
       
       {/* View More Link */}
       <div className="text-center">
-        <Button variant="link" className="gap-1 text-muted-foreground hover:text-primary">
+        <Button 
+          variant="link" 
+          className="gap-1 text-muted-foreground hover:text-primary"
+          onClick={() => navigate('/dashboard/campaigns')}
+        >
           View All Campaigns
           <ChevronRight className="h-4 w-4" />
         </Button>

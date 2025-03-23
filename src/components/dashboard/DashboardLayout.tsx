@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   LayoutDashboard, Settings, FileText, Users, Database, 
   LogOut, Menu, X, ChevronRight, ChevronDown, Home, Server,
-  Sun, Moon
+  Sun, Moon, Target, BarChart3
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -94,6 +94,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title = "Da
   const { user, profile, signOut } = useAuth();
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
+  const location = useLocation();
   
   const handleLogout = async () => {
     try {
@@ -117,6 +118,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title = "Da
 
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  // Helper to check if a path is active
+  const isPathActive = (path: string) => {
+    return location.pathname.startsWith(path);
   };
 
   return (
@@ -152,7 +158,21 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title = "Da
               to="/dashboard" 
               icon={LayoutDashboard} 
               label="Dashboard" 
-              isActive={true}
+              isActive={location.pathname === '/dashboard'}
+            />
+            
+            <NavItem 
+              to="/dashboard/campaigns" 
+              icon={Target} 
+              label="Ad Campaigns" 
+              isActive={isPathActive('/dashboard/campaigns')}
+            />
+            
+            <NavItem 
+              to="/dashboard/analytics" 
+              icon={BarChart3} 
+              label="Analytics" 
+              isActive={isPathActive('/dashboard/analytics')}
             />
             
             <NavItem 
@@ -167,11 +187,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title = "Da
                 to="/dashboard/content/pages" 
                 icon={FileText} 
                 label="Pages" 
+                isActive={isPathActive('/dashboard/content/pages')}
               />
               <NavItem 
                 to="/dashboard/content/media" 
                 icon={FileText} 
                 label="Media" 
+                isActive={isPathActive('/dashboard/content/media')}
               />
             </NavItem>
             
@@ -179,18 +201,21 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children, title = "Da
               to="/dashboard/clients" 
               icon={Users} 
               label="Client Management" 
+              isActive={isPathActive('/dashboard/clients')}
             />
             
             <NavItem 
               to="/dashboard/projects" 
               icon={Database} 
               label="Projects" 
+              isActive={isPathActive('/dashboard/projects')}
             />
             
             <NavItem 
               to="/dashboard/settings" 
               icon={Settings} 
               label="Settings" 
+              isActive={isPathActive('/dashboard/settings')}
             />
             
             <NavItem 
