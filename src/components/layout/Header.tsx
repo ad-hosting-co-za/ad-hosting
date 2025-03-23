@@ -33,6 +33,7 @@ const Header = ({ className }: HeaderProps) => {
       dropdown: [
         { name: 'Web Hosting', href: '/services/hosting' },
         { name: 'Cloud Services', href: '/services/cloud' },
+        { name: 'Ad Hosting', href: '/services/adhosting' },
         { name: 'Website Migration', href: '/services/migration' },
         { name: 'Development', href: '/services/development' },
       ]

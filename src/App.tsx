@@ -26,6 +26,7 @@ import About from "./pages/About";
 import WebHosting from "./pages/services/Hosting";
 import CloudServices from "./pages/services/Cloud";
 import Development from "./pages/services/Development";
+import AdHosting from "./pages/services/AdHosting";
 import Team from "./pages/Team";
 import Careers from "./pages/Careers";
 import Blog from "./pages/Blog";
@@ -88,6 +89,7 @@ const App = () => {
                       <Route path="/services/cloud" element={<CloudServices />} />
                       <Route path="/services/migration" element={<Migration />} />
                       <Route path="/services/development" element={<Development />} />
+                      <Route path="/services/adhosting" element={<AdHosting />} />
                       <Route path="/about" element={<About />} />
                       <Route path="/about/team" element={<Team />} />
                       <Route path="/about/careers" element={<Careers />} />

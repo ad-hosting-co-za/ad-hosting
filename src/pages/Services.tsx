@@ -1,9 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cloud, Code, Database, Globe, Server, Shield, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Cloud, Code, Database, Globe, Server, Shield, ArrowRight, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { SEO } from '@/components/shared/SEO';
 
 const services = [
@@ -13,6 +14,7 @@ const services = [
     icon: Server,
     features: ['SSD Storage', 'Free SSL', 'Daily Backups', '24/7 Support'],
     color: 'from-blue-500/20 to-blue-600/20',
+    link: '/services/hosting'
   },
   {
     title: 'Cloud Services',
@@ -20,6 +22,15 @@ const services = [
     icon: Cloud,
     features: ['Auto-scaling', 'Load Balancing', 'Container Support', 'Cloud Storage'],
     color: 'from-purple-500/20 to-purple-600/20',
+    link: '/services/cloud'
+  },
+  {
+    title: 'Ad Hosting',
+    description: 'Powerful advertising platform to reach your target audience.',
+    icon: Target,
+    features: ['Campaign Management', 'Audience Targeting', 'Real-time Analytics', 'A/B Testing'],
+    color: 'from-pink-500/20 to-pink-600/20',
+    link: '/services/adhosting'
   },
   {
     title: 'Website Migration',
@@ -27,6 +38,7 @@ const services = [
     icon: Database,
     features: ['Data Transfer', 'DNS Management', 'SSL Migration', 'Testing'],
     color: 'from-green-500/20 to-green-600/20',
+    link: '/services/migration'
   },
   {
     title: 'Development',
@@ -34,18 +46,21 @@ const services = [
     icon: Code,
     features: ['React/Next.js', 'Node.js', 'Database Design', 'API Integration'],
     color: 'from-yellow-500/20 to-yellow-600/20',
+    link: '/services/development'
   },
   {
     title: 'Domain Management',
     description: 'Complete domain registration and management services.',
     icon: Globe,
     features: ['Domain Registration', 'DNS Management', 'Email Hosting', 'Domain Transfer'],
+    color: 'from-indigo-500/20 to-indigo-600/20'
   },
   {
     title: 'Security',
     description: 'Advanced security solutions to protect your website.',
     icon: Shield,
     features: ['DDoS Protection', 'Malware Scanning', 'Firewall', 'SSL Certificates'],
+    color: 'from-emerald-500/20 to-emerald-600/20'
   },
 ];
 
@@ -133,6 +148,16 @@ const Services = () => {
                       ))}
                     </ul>
                   </CardContent>
+                  {service.link && (
+                    <CardFooter>
+                      <Button variant="ghost" className="w-full justify-between group" asChild>
+                        <Link to={service.link}>
+                          Learn more
+                          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  )}
                 </div>
               </Card>
             </motion.div>

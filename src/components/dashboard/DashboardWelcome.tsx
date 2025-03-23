@@ -3,7 +3,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Files, Users, Server, Settings, Activity } from 'lucide-react';
+import { Files, Users, Server, Settings, Activity, BarChart3, Target, TrendingUp } from 'lucide-react';
+import AdCampaignsPanel from './AdCampaignsPanel';
 
 interface StatCardProps {
   title: string;
@@ -48,13 +49,14 @@ const DashboardWelcome: React.FC = () => {
       <div>
         <h2 className="text-3xl font-bold tracking-tight">{greeting}, {displayName}!</h2>
         <p className="text-muted-foreground">
-          Here's an overview of your hosting account and recent activity.
+          Here's an overview of your hosting account, advertising campaigns, and recent activity.
         </p>
       </div>
       
       <Tabs defaultValue="overview">
-        <TabsList>
+        <TabsList className="grid grid-cols-4">
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="adcampaigns">Ad Campaigns</TabsTrigger>
           <TabsTrigger value="analytics">Analytics</TabsTrigger>
           <TabsTrigger value="activity">Recent Activity</TabsTrigger>
         </TabsList>
@@ -67,9 +69,9 @@ const DashboardWelcome: React.FC = () => {
               icon={<Files className="h-4 w-4 text-muted-foreground" />} 
             />
             <StatCard 
-              title="Client Accounts" 
+              title="Active Campaigns" 
               value="2" 
-              icon={<Users className="h-4 w-4 text-muted-foreground" />} 
+              icon={<Target className="h-4 w-4 text-purple-500" />} 
             />
             <StatCard 
               title="Hosting Usage" 
@@ -78,10 +80,10 @@ const DashboardWelcome: React.FC = () => {
               description="0.24 GB of 1 GB used"
             />
             <StatCard 
-              title="Uptime" 
-              value="99.9%" 
-              icon={<Activity className="h-4 w-4 text-muted-foreground" />} 
-              description="Last 30 days"
+              title="Ad Performance" 
+              value="+12%" 
+              icon={<TrendingUp className="h-4 w-4 text-green-500" />} 
+              description="CTR vs last month"
             />
           </div>
           
@@ -98,16 +100,16 @@ const DashboardWelcome: React.FC = () => {
                     Create New Project
                   </Button>
                   <Button variant="outline" className="justify-start">
-                    <Users className="mr-2 h-4 w-4" />
-                    Add Client
+                    <Target className="mr-2 h-4 w-4" />
+                    New Ad Campaign
                   </Button>
                   <Button variant="outline" className="justify-start">
                     <Server className="mr-2 h-4 w-4" />
                     Manage Hosting
                   </Button>
                   <Button variant="outline" className="justify-start">
-                    <Settings className="mr-2 h-4 w-4" />
-                    Account Settings
+                    <BarChart3 className="mr-2 h-4 w-4" />
+                    View Analytics
                   </Button>
                 </div>
               </CardContent>
@@ -120,21 +122,21 @@ const DashboardWelcome: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <p className="text-sm font-medium">Standard Plan</p>
-                  <p className="text-xs text-muted-foreground">Renews on Nov 1, 2023</p>
+                  <p className="text-sm font-medium">Business Plan</p>
+                  <p className="text-xs text-muted-foreground">Renews on Aug 1, 2025</p>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span>Storage</span>
-                    <span className="font-medium">1 GB</span>
+                    <span className="font-medium">10 GB</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
                     <span>Bandwidth</span>
-                    <span className="font-medium">10 GB/month</span>
+                    <span className="font-medium">100 GB/month</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span>Projects</span>
-                    <span className="font-medium">5</span>
+                    <span>Ad Impressions</span>
+                    <span className="font-medium">50,000/month</span>
                   </div>
                 </div>
                 <Button size="sm" className="w-full">Upgrade Plan</Button>
@@ -143,11 +145,15 @@ const DashboardWelcome: React.FC = () => {
           </div>
         </TabsContent>
         
+        <TabsContent value="adcampaigns">
+          <AdCampaignsPanel />
+        </TabsContent>
+        
         <TabsContent value="analytics">
           <Card>
             <CardHeader>
               <CardTitle>Analytics Dashboard</CardTitle>
-              <CardDescription>Traffic and usage statistics for your projects</CardDescription>
+              <CardDescription>Traffic and conversion statistics for your projects and campaigns</CardDescription>
             </CardHeader>
             <CardContent className="h-[400px] flex items-center justify-center">
               <p className="text-muted-foreground">Analytics data will appear here</p>
@@ -168,6 +174,13 @@ const DashboardWelcome: React.FC = () => {
                   <div>
                     <p className="text-sm font-medium">Logged in successfully</p>
                     <p className="text-xs text-muted-foreground">Just now</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4 rounded-md border p-4">
+                  <Target className="h-5 w-5 text-muted-foreground mt-0.5" />
+                  <div>
+                    <p className="text-sm font-medium">New ad campaign created</p>
+                    <p className="text-xs text-muted-foreground">Yesterday</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4 rounded-md border p-4">
