@@ -10,6 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Check } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const features = [
   {
@@ -93,116 +96,115 @@ const plans = [
   }
 ];
 
-const WebHosting = () => {
+const HostingPage = () => {
   return (
-    <div className="min-h-screen py-20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-16">
+    <div className="min-h-screen pt-20 bg-[#0B1120] text-white">
+      <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            Professional Web Hosting Solutions
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Web Hosting Solutions
           </h1>
-          <p className="text-lg text-white/60 mb-8">
-            Experience lightning-fast hosting with 99.9% uptime guarantee and world-class support.
+          <p className="text-xl text-white/80 mb-8">
+            Reliable, secure, and high-performance hosting services for your website
           </p>
-          <div className="flex justify-center gap-4">
-            <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Shared Hosting</h2>
+            <p className="text-white/70 mb-4">
+              Perfect for small to medium websites with our optimized shared hosting environment.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Unlimited bandwidth
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Free SSL certificates
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                99.9% uptime guarantee
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
               Get Started
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5">
-              View Plans
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">VPS Hosting</h2>
+            <p className="text-white/70 mb-4">
+              Dedicated resources and full control with our Virtual Private Servers.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Dedicated resources
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Root access
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Scalable resources
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-semibold mb-6">Why Choose Our Hosting?</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">High Performance</h3>
+              <p className="text-white/70">
+                Optimized servers and caching for lightning-fast load times
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">24/7 Support</h3>
+              <p className="text-white/70">
+                Expert technical support available around the clock
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Security</h3>
+              <p className="text-white/70">
+                Advanced security measures to protect your website
+              </p>
+            </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="feature-card h-full">
-                  <CardHeader>
-                    <div className="card-icon">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/60">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Pricing Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Choose Your Plan</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative"
-            >
-              <Card className={cn(
-                'h-full border border-white/10 hover:border-blue-500/20 transition-all duration-300',
-                plan.popular && 'border-blue-500/50'
-              )}>
-                {plan.popular && (
-                  <div className="absolute -top-4 left-0 right-0 flex justify-center">
-                    <span className="bg-blue-500 text-white text-sm px-3 py-1 rounded-full">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-                <CardHeader>
-                  <CardTitle className="text-2xl text-white/90">{plan.name}</CardTitle>
-                  <div className="mt-2">
-                    <span className="text-3xl font-bold text-white">{plan.price}</span>
-                    <span className="text-white/60">/month</span>
-                  </div>
-                  <CardDescription className="mt-2 text-white/60">
-                    {plan.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-center text-white/80">
-                        <Check className="h-5 w-5 text-blue-500 mr-2" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button className="w-full mt-6 bg-blue-500 hover:bg-blue-600">
-                    Choose {plan.name}
-                  </Button>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      </div>
     </div>
   );
 };
 
-export default WebHosting; 
+export default HostingPage; 

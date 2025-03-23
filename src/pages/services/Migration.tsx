@@ -16,6 +16,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { OptimizedImage } from '@/components/ui/optimized-image';
+import { Link } from 'react-router-dom';
 
 const features = [
   {
@@ -126,142 +128,115 @@ const faqs = [
   }
 ];
 
-const Migration = () => {
+const MigrationPage = () => {
   return (
-    <div className="min-h-screen py-20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-16">
+    <div className="min-h-screen pt-20 bg-[#0B1120] text-white">
+      <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Website Migration Services
           </h1>
-          <p className="text-lg text-white/60 mb-8">
-            Seamless website migration with zero downtime and guaranteed data integrity.
+          <p className="text-xl text-white/80 mb-8">
+            Seamless website migration with zero downtime
           </p>
-          <div className="flex justify-center gap-4">
-            <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-              Start Migration
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Full Website Migration</h2>
+            <p className="text-white/70 mb-4">
+              Complete website transfer with all content and functionality preserved.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Content transfer
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Database migration
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                DNS configuration
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5">
-              Learn More
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Platform Migration</h2>
+            <p className="text-white/70 mb-4">
+              Transfer your website to a new platform or CMS.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                CMS migration
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Theme conversion
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Plugin compatibility
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-semibold mb-6">Migration Process</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Assessment</h3>
+              <p className="text-white/70">
+                Detailed analysis of your current website structure
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Planning</h3>
+              <p className="text-white/70">
+                Custom migration strategy and timeline
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Execution</h3>
+              <p className="text-white/70">
+                Seamless transfer with zero downtime
+              </p>
+            </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="feature-card h-full">
-                  <CardHeader>
-                    <div className="card-icon">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/60">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Migration Process</h2>
-        <div className="max-w-4xl mx-auto">
-          {process.map((step, index) => (
-            <motion.div
-              key={step.title}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="relative mb-8 last:mb-0"
-            >
-              <Card className="border-white/10">
-                <CardHeader>
-                  <div className="flex items-center gap-4">
-                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-                      {index + 1}
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{step.title}</CardTitle>
-                  </div>
-                  <CardDescription className="text-white/60 mt-2">
-                    {step.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {step.steps.map((item, i) => (
-                      <li key={i} className="flex items-center text-white/80">
-                        <ArrowRight className="h-4 w-4 text-blue-500 mr-2" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
-        <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, index) => (
-              <AccordionItem key={index} value={`item-${index}`} className="border-white/10">
-                <AccordionTrigger className="text-white/90 hover:text-blue-400">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-white/60">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
-        <Card className="border-white/10 bg-gradient-to-r from-blue-500/10 to-blue-600/10">
-          <CardContent className="p-12">
-            <div className="text-center max-w-2xl mx-auto">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Ready to Migrate Your Website?
-              </h3>
-              <p className="text-white/60 mb-8">
-                Get in touch with our migration experts and start your seamless transition today.
-              </p>
-              <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-                Schedule Consultation
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
     </div>
   );
 };
 
-export default Migration; 
+export default MigrationPage; 

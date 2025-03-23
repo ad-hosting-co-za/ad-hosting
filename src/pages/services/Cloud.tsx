@@ -11,6 +11,9 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Check } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { OptimizedImage } from '@/components/ui/optimized-image';
 
 const features = [
   {
@@ -87,126 +90,115 @@ const solutions = [
   }
 ];
 
-const CloudServices = () => {
+const CloudPage = () => {
   return (
-    <div className="min-h-screen py-20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-16">
+    <div className="min-h-screen pt-20 bg-[#0B1120] text-white">
+      <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            Enterprise Cloud Solutions
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Cloud Services
           </h1>
-          <p className="text-lg text-white/60 mb-8">
-            Scale your business with our secure and reliable cloud infrastructure.
+          <p className="text-xl text-white/80 mb-8">
+            Scalable cloud solutions to power your business growth
           </p>
-          <div className="flex justify-center gap-4">
-            <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-              Start Free Trial
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Cloud Storage</h2>
+            <p className="text-white/70 mb-4">
+              Secure and scalable storage solutions for your data needs.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Unlimited storage
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Data encryption
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Global CDN
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5">
-              Schedule Demo
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Cloud Computing</h2>
+            <p className="text-white/70 mb-4">
+              High-performance computing resources on demand.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Pay-as-you-go
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Auto-scaling
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Load balancing
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-semibold mb-6">Cloud Benefits</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Scalability</h3>
+              <p className="text-white/70">
+                Scale your resources up or down based on demand
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Cost Efficiency</h3>
+              <p className="text-white/70">
+                Pay only for the resources you use
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Reliability</h3>
+              <p className="text-white/70">
+                Built-in redundancy and failover protection
+              </p>
+            </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="feature-card h-full">
-                  <CardHeader>
-                    <div className="card-icon">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/60">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Solutions Tabs */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Cloud Solutions</h2>
-        <Tabs defaultValue="storage" className="w-full max-w-4xl mx-auto">
-          <TabsList className="grid grid-cols-3 bg-white/5 border border-white/10">
-            {solutions.map((solution) => (
-              <TabsTrigger
-                key={solution.id}
-                value={solution.id}
-                className="data-[state=active]:bg-blue-500"
-              >
-                {solution.title}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {solutions.map((solution) => (
-            <TabsContent key={solution.id} value={solution.id}>
-              <Card className="border-white/10">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-white/90">{solution.title}</CardTitle>
-                  <CardDescription className="text-white/60">
-                    {solution.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {solution.features.map((feature, index) => (
-                      <li key={index} className="flex items-center text-white/80">
-                        <Check className="h-5 w-5 text-blue-500 mr-2" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <Button className="mt-6 bg-blue-500 hover:bg-blue-600">
-                    Learn More
-                  </Button>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
-        <Card className="border-white/10 bg-gradient-to-r from-blue-500/10 to-blue-600/10">
-          <CardContent className="p-12">
-            <div className="text-center max-w-2xl mx-auto">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Ready to Move to the Cloud?
-              </h3>
-              <p className="text-white/60 mb-8">
-                Get started with our cloud solutions today and transform your business.
-              </p>
-              <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-                Contact Sales
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
     </div>
   );
 };
 
-export default CloudServices; 
+export default CloudPage; 

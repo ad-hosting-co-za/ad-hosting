@@ -16,6 +16,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
+import { OptimizedImage } from '@/components/ui/optimized-image';
+import { Link } from 'react-router-dom';
 
 const services = [
   {
@@ -117,161 +119,115 @@ const features = [
   }
 ];
 
-const Development = () => {
+const DevelopmentPage = () => {
   return (
-    <div className="min-h-screen py-20">
-      {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-20 pb-16">
+    <div className="min-h-screen pt-20 bg-[#0B1120] text-white">
+      <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto"
+          transition={{ duration: 0.5 }}
+          className="max-w-4xl mx-auto text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
-            Custom Development Services
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Web Development Services
           </h1>
-          <p className="text-lg text-white/60 mb-8">
-            Transform your ideas into reality with our expert development team.
+          <p className="text-xl text-white/80 mb-8">
+            Custom web solutions built with cutting-edge technology
           </p>
-          <div className="flex justify-center gap-4">
-            <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-              Start Project
+        </motion.div>
+
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">Custom Web Development</h2>
+            <p className="text-white/70 mb-4">
+              Tailored web applications built to your specific requirements.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Responsive design
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Modern frameworks
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                SEO optimization
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
-            <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5">
-              View Portfolio
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="bg-[#1A1F2E] rounded-lg p-6"
+          >
+            <h2 className="text-2xl font-semibold mb-4">E-commerce Solutions</h2>
+            <p className="text-white/70 mb-4">
+              Powerful online stores that drive sales and growth.
+            </p>
+            <ul className="space-y-2 mb-6">
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Payment integration
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Inventory management
+              </li>
+              <li className="flex items-center">
+                <span className="text-blue-400 mr-2">✓</span>
+                Order tracking
+              </li>
+            </ul>
+            <Button className="w-full bg-blue-500 hover:bg-blue-600">
+              Get Started
             </Button>
+          </motion.div>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="text-center"
+        >
+          <h2 className="text-3xl font-semibold mb-6">Our Development Process</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Planning</h3>
+              <p className="text-white/70">
+                Detailed requirements analysis and project planning
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Development</h3>
+              <p className="text-white/70">
+                Agile development with regular updates
+              </p>
+            </div>
+            <div className="bg-[#1A1F2E] p-6 rounded-lg">
+              <h3 className="text-xl font-semibold mb-3">Launch</h3>
+              <p className="text-white/70">
+                Thorough testing and smooth deployment
+              </p>
+            </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Services Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="feature-card h-full">
-                  <CardHeader>
-                    <div className="card-icon">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{service.title}</CardTitle>
-                    <CardDescription className="text-white/60">
-                      {service.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {service.features.map((feature, i) => (
-                        <li key={i} className="flex items-center text-white/80">
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Technologies Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Technologies We Use</h2>
-        <Tabs defaultValue="Frontend" className="w-full max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-3 bg-white/5 border border-white/10">
-            {technologies.map((tech) => (
-              <TabsTrigger
-                key={tech.category}
-                value={tech.category}
-                className="data-[state=active]:bg-blue-500"
-              >
-                {tech.category}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {technologies.map((tech) => (
-            <TabsContent key={tech.category} value={tech.category}>
-              <Card className="border-white/10">
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {tech.items.map((item, i) => (
-                      <div
-                        key={i}
-                        className="p-4 rounded-lg bg-white/5 border border-white/10 hover:border-blue-500/20 transition-colors"
-                      >
-                        <h3 className="text-lg font-semibold text-white/90 mb-1">{item.name}</h3>
-                        <p className="text-white/60">{item.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          ))}
-        </Tabs>
-      </section>
-
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Why Choose Us</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="feature-card h-full">
-                  <CardHeader>
-                    <div className="card-icon">
-                      <Icon className="h-6 w-6" />
-                    </div>
-                    <CardTitle className="text-xl text-white/90">{feature.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-white/60">{feature.description}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-4 py-16">
-        <Card className="border-white/10 bg-gradient-to-r from-blue-500/10 to-blue-600/10">
-          <CardContent className="p-12">
-            <div className="text-center max-w-2xl mx-auto">
-              <h3 className="text-2xl md:text-3xl font-bold mb-4">
-                Ready to Start Your Project?
-              </h3>
-              <p className="text-white/60 mb-8">
-                Let's discuss your requirements and create something amazing together.
-              </p>
-              <Button size="lg" className="bg-blue-500 hover:bg-blue-600">
-                Get Free Consultation
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </section>
+      </div>
     </div>
   );
 };
 
-export default Development; 
+export default DevelopmentPage; 

@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from 'next-themes';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
@@ -13,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from '@/lib/utils';
-import { Menu, X, Sun, Moon, Monitor, ChevronDown } from 'lucide-react';
+import { Menu, ChevronDown } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/optimized-image';
 
 interface HeaderProps {
@@ -22,7 +21,6 @@ interface HeaderProps {
 
 const Header = ({ className }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
   const location = useLocation();
 
   const navigation = [
