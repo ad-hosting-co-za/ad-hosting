@@ -99,7 +99,7 @@ const App = () => {
                       <Route path="/auth" element={<Auth />} />
                       
                       {/* User Dashboard */}
-                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/dashboard/*" element={<Dashboard />} />
                       
                       {/* Admin routes */}
                       <Route path="/admin" element={<Admin />}>
