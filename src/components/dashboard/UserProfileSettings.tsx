@@ -1,178 +1,200 @@
-
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, Check, AlertCircle } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useToast } from '@/components/ui/use-toast';
+import { Loader2, Upload, User } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
-const UserProfileSettings = () => {
-  const { user, profile, refreshProfile } = useAuth();
-  const [username, setUsername] = useState('');
-  const [avatarUrl, setAvatarUrl] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
-  const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+const UserProfileSettings: React.FC = () => {
+  const { user, profile, updateProfile } = useAuth();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    username: '',
+    full_name: '',
+    website: '',
+    bio: '',
+  });
 
   useEffect(() => {
     if (profile) {
-      setUsername(profile.username || '');
-      setAvatarUrl(profile.avatar_url || '');
+      setFormData({
+        username: profile.username || '',
+        full_name: profile.full_name || '',
+        website: profile.website || '',
+        bio: profile.bio || '',
+      });
+      setAvatarUrl(profile.avatar_url);
     }
   }, [profile]);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-    setAvatarFile(file);
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    try {
+      setLoading(true);
+      const file = e.target.files?.[0];
+      if (!file) return;
 
-    // Create preview
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setAvatarPreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
+      // Upload image to Supabase Storage
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `${user?.id}/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      // Update profile with new avatar URL
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ avatar_url: publicUrl })
+        .eq('id', user?.id);
+
+      if (updateError) throw updateError;
+
+      setAvatarUrl(publicUrl);
+      toast({
+        title: "Success",
+        description: "Avatar updated successfully",
+      });
+    } catch (error) {
+      console.error('Error uploading avatar:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload avatar",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
-
-    setIsLoading(true);
-    setMessage(null);
-    
     try {
-      let newAvatarUrl = avatarUrl;
-
-      // Upload new avatar if selected
-      if (avatarFile) {
-        const fileExt = avatarFile.name.split('.').pop();
-        const filePath = `avatars/${user.id}-${Math.random().toString(36).substring(2)}.${fileExt}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('profiles')
-          .upload(filePath, avatarFile);
-
-        if (uploadError) {
-          throw new Error(`Error uploading avatar: ${uploadError.message}`);
-        }
-
-        // Get public URL
-        const { data } = supabase.storage
-          .from('profiles')
-          .getPublicUrl(filePath);
-
-        newAvatarUrl = data.publicUrl;
-      }
-
-      // Update profile
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          username,
-          avatar_url: newAvatarUrl,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', user.id);
-
-      if (error) throw error;
-
-      // Refresh profile in auth context
-      await refreshProfile();
-      
-      setMessage({ 
-        type: 'success', 
-        text: 'Profile updated successfully!' 
+      setLoading(true);
+      await updateProfile(formData);
+      toast({
+        title: "Success",
+        description: "Profile updated successfully",
       });
     } catch (error) {
       console.error('Error updating profile:', error);
-      setMessage({ 
-        type: 'error', 
-        text: error instanceof Error ? error.message : 'Failed to update profile' 
+      toast({
+        title: "Error",
+        description: "Failed to update profile",
+        variant: "destructive",
       });
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  if (!user) return null;
+  const userInitials = profile?.username?.substring(0, 2).toUpperCase() || 
+                      user?.email?.substring(0, 2).toUpperCase() || "U";
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle>Profile Settings</CardTitle>
-        <CardDescription>Update your profile information</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="flex flex-col items-center space-y-3">
-              <Avatar className="w-24 h-24 border-2 border-border">
-                <AvatarImage src={avatarPreview || avatarUrl} alt={username} />
-                <AvatarFallback className="text-2xl">
-                  {username?.substring(0, 2).toUpperCase() || user.email?.substring(0, 2).toUpperCase() || "U"}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col space-y-1.5 items-center">
-                <Label htmlFor="avatar" className="cursor-pointer text-sm font-medium text-center px-2 py-1 rounded-md bg-secondary hover:bg-secondary/80">
-                  Choose Image
-                </Label>
-                <Input 
-                  id="avatar" 
-                  type="file" 
-                  accept="image/*" 
-                  className="hidden" 
-                  onChange={handleFileChange}
-                />
-                <p className="text-xs text-muted-foreground">JPG, PNG or GIF, max 2MB</p>
-              </div>
-            </div>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex items-center gap-6">
+        <div className="relative">
+          <Avatar className="h-24 w-24 ring-2 ring-primary/10">
+            <AvatarImage src={avatarUrl || undefined} alt={profile?.username || "User"} />
+            <AvatarFallback>{userInitials}</AvatarFallback>
+          </Avatar>
+          <label
+            htmlFor="avatar-upload"
+            className="absolute bottom-0 right-0 rounded-full bg-primary p-2 text-primary-foreground cursor-pointer hover:bg-primary/90 transition-colors"
+          >
+            <Upload className="h-4 w-4" />
+          </label>
+          <input
+            id="avatar-upload"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleAvatarUpload}
+            disabled={loading}
+          />
+        </div>
+        <div>
+          <h3 className="text-lg font-medium">Profile Picture</h3>
+          <p className="text-sm text-muted-foreground">
+            Upload a new profile picture (max 2MB)
+          </p>
+        </div>
+      </div>
 
-            <div className="flex-1 space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={user.email} disabled className="bg-muted" />
-                <p className="text-xs text-muted-foreground">Your email cannot be changed</p>
-              </div>
+      <div className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+            placeholder="Enter your username"
+            disabled={loading}
+          />
+        </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input 
-                  id="username" 
-                  value={username} 
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
-                />
-              </div>
-            </div>
-          </div>
+        <div className="grid gap-2">
+          <Label htmlFor="full_name">Full Name</Label>
+          <Input
+            id="full_name"
+            name="full_name"
+            value={formData.full_name}
+            onChange={handleInputChange}
+            placeholder="Enter your full name"
+            disabled={loading}
+          />
+        </div>
 
-          {message && (
-            <Alert className={message.type === 'success' ? 'bg-success/20 text-success' : 'bg-destructive/20 text-destructive'}>
-              {message.type === 'success' ? <Check className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
-              <AlertDescription>{message.text}</AlertDescription>
-            </Alert>
-          )}
+        <div className="grid gap-2">
+          <Label htmlFor="website">Website</Label>
+          <Input
+            id="website"
+            name="website"
+            value={formData.website}
+            onChange={handleInputChange}
+            placeholder="https://your-website.com"
+            disabled={loading}
+          />
+        </div>
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving Changes
-              </>
-            ) : (
-              'Save Changes'
-            )}
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        <div className="grid gap-2">
+          <Label htmlFor="bio">Bio</Label>
+          <Textarea
+            id="bio"
+            name="bio"
+            value={formData.bio}
+            onChange={handleInputChange}
+            placeholder="Tell us about yourself"
+            disabled={loading}
+          />
+        </div>
+      </div>
+
+      <Button type="submit" disabled={loading}>
+        {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        Save Changes
+      </Button>
+    </form>
   );
 };
 
