@@ -2,30 +2,16 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-
-interface JwtPayload {
-  id: string;
-  email: string;
-  name: string;
-  role: 'user' | 'admin';
-  exp: number;
-  iat: number;
-}
-
-interface User {
-  id: string;
-  email: string;
-  name: string;
-  role: 'user' | 'admin';
-}
+import { supabase } from '@/integrations/supabase/client';
+import { User, Session } from '@supabase/supabase-js';
 
 interface AuthContextType {
   user: User | null;
+  session: Session | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<void>;
-  logout: () => void;
+  login: (email: string, password: string) => Promise<{ error?: Error }>;
+  register: (email: string, password: string, name: string) => Promise<{ error?: Error }>;
+  logout: () => Promise<void>;
   isAuthenticated: boolean;
 }
 
@@ -33,57 +19,46 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const token = localStorage.getItem('auth_token');
-      if (token) {
-        const decoded = jwtDecode<JwtPayload>(token);
-        if (decoded.exp && decoded.exp * 1000 > Date.now()) {
-          const { exp, iat, ...userData } = decoded;
-          setUser(userData);
-        } else {
-          localStorage.removeItem('auth_token');
-        }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+        setUser(session?.user ?? null);
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      localStorage.removeItem('auth_token');
-    } finally {
+    );
+
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setUser(session?.user ?? null);
       setIsLoading(false);
-    }
-  };
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
 
   const login = async (email: string, password: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
-      }
-
-      const { token } = await response.json();
-      localStorage.setItem('auth_token', token);
-      const decoded = jwtDecode<JwtPayload>(token);
-      const { exp, iat, ...userData } = decoded;
-      setUser(userData);
+      
+      if (error) throw error;
+      
       navigate('/dashboard');
+      return {};
     } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+      console.error('Login error:', error);
+      return { error: error as Error };
     } finally {
       setIsLoading(false);
     }
@@ -92,40 +67,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (email: string, password: string, name: string) => {
     try {
       setIsLoading(true);
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name,
+          },
         },
-        body: JSON.stringify({ email, password, name }),
       });
-
-      if (!response.ok) {
-        throw new Error('Registration failed');
+      
+      if (error) throw error;
+      
+      // After signup, create a profile record
+      if (user) {
+        await supabase.from('profiles').upsert({
+          id: user.id,
+          username: name,
+          updated_at: new Date().toISOString(),
+        });
       }
-
-      const { token } = await response.json();
-      localStorage.setItem('auth_token', token);
-      const decoded = jwtDecode<JwtPayload>(token);
-      const { exp, iat, ...userData } = decoded;
-      setUser(userData);
+      
       navigate('/dashboard');
+      return {};
     } catch (error) {
-      console.error('Registration failed:', error);
-      throw error;
+      console.error('Registration error:', error);
+      return { error: error as Error };
     } finally {
       setIsLoading(false);
     }
   };
 
-  const logout = () => {
-    localStorage.removeItem('auth_token');
-    setUser(null);
+  const logout = async () => {
+    await supabase.auth.signOut();
     navigate('/');
   };
 
   const value = {
     user,
+    session,
     isLoading,
     login,
     register,

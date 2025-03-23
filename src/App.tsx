@@ -12,6 +12,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import Content from "./pages/admin/Content";
 import Files from "./pages/admin/Files";
 import Settings from "./pages/admin/Settings";
+import SupabaseStatus from "./pages/admin/SupabaseStatus";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { configService } from "./services/ConfigService";
@@ -106,6 +107,7 @@ const App = () => {
                         <Route path="content" element={<Content />} />
                         <Route path="files" element={<Files />} />
                         <Route path="settings" element={<Settings />} />
+                        <Route path="supabase" element={<SupabaseStatus />} />
                       </Route>
                       
                       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

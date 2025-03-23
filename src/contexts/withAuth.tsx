@@ -9,14 +9,14 @@ export function withAuth<P extends object>(
   WrappedComponent: React.ComponentType<P>
 ) {
   return function WithAuthComponent(props: P) {
-    const { isAuthenticated, isLoading } = useAuth();
+    const { user, isLoading } = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
-      if (!isLoading && !isAuthenticated) {
-        navigate('/login');
+      if (!isLoading && !user) {
+        navigate('/auth');
       }
-    }, [isLoading, isAuthenticated, navigate]);
+    }, [isLoading, user, navigate]);
 
     if (isLoading) {
       return (
@@ -34,7 +34,7 @@ export function withAuth<P extends object>(
       );
     }
 
-    if (!isAuthenticated) {
+    if (!user) {
       return null;
     }
 
