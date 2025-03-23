@@ -12,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { Loader2, AlertCircle, CheckCircle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 
 const Auth = () => {
   const { user, login, register, isLoading } = useAuth();
@@ -273,7 +272,6 @@ const Auth = () => {
           </Card>
         </Container>
       </main>
-      <Footer />
     </div>
   );
 };
