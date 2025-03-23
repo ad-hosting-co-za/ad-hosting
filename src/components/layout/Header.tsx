@@ -66,7 +66,7 @@ const Header = ({ className }: HeaderProps) => {
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center relative w-[180px] h-[60px]"
+          className="flex items-center relative w-[540px] h-[180px]"
         >
           <motion.div
             initial={{ opacity: 0 }}
