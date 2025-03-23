@@ -46,15 +46,10 @@ const Footer = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
-              className="relative w-[200px] h-[70px] mb-8"
+              className="mb-8"
             >
-              <Link to="/">
-                <OptimizedImage
-                  src="/A&D-Studios33.png"
-                  alt="A&D Studios Logo"
-                  className="w-full h-full object-contain filter brightness-110"
-                  aspectRatio="3/1"
-                />
+              <Link to="/" className="text-3xl font-bold text-white hover:text-blue-400 transition-colors">
+                A&D Studios
               </Link>
             </motion.div>
             

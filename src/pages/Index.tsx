@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Services from "@/components/sections/Services";
@@ -51,7 +50,6 @@ const Index = () => {
           </Container>
         )}
       </main>
-      <Footer />
       
       {showChat ? (
         <ChatInterface />
