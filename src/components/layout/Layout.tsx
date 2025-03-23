@@ -15,7 +15,6 @@ interface LayoutProps {
 }
 
 const Layout = ({ children, className }: LayoutProps) => {
-  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -27,30 +26,30 @@ const Layout = ({ children, className }: LayoutProps) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Determine if we're on a page that should have a transparent header
-  const isTransparentHeader = location.pathname === '/';
-
   return (
     <div className="relative min-h-screen flex flex-col">
-      <Header 
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          isScrolled || !isTransparentHeader 
-            ? 'bg-background/80 backdrop-blur-lg border-b'
-            : 'bg-transparent'
-        )}
-      />
-      
-      <main className={cn(
-        'flex-1 pt-32',
-        className
-      )}>
-        <ScrollArea className="h-full">
-          {children}
-        </ScrollArea>
-      </main>
+      {/* Content Wrapper */}
+      <div className="relative z-10 flex flex-col min-h-screen text-white">
+        <Header 
+          className={cn(
+            'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+            isScrolled 
+              ? 'bg-[#0B1120]/80 backdrop-blur-lg border-b border-white/5'
+              : 'bg-transparent'
+          )}
+        />
+        
+        <main className={cn(
+          'flex-1 pt-32',
+          className
+        )}>
+          <ScrollArea className="h-full">
+            {children}
+          </ScrollArea>
+        </main>
 
-      <Footer />
+        <Footer className="border-t border-white/5 bg-[#0B1120]/80 backdrop-blur-lg" />
+      </div>
       
       {/* Global Notifications */}
       <Toaster />

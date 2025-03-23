@@ -95,7 +95,7 @@ const culture = [
 
 const Careers = () => {
   return (
-    <div className="min-h-screen bg-[#0B1120] text-white">
+    <div className="min-h-screen text-white">
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16">
         <motion.div

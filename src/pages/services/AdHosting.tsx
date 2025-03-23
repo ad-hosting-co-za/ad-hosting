@@ -162,7 +162,7 @@ const formatInfo = {
 
 const AdHostingPage = () => {
   return (
-    <div className="min-h-screen pt-20 bg-[#0B1120] text-white">
+    <div className="relative">
       <div className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

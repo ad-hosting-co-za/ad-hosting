@@ -6,8 +6,13 @@ import { OptimizedImage } from '@/components/ui/optimized-image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Facebook, Twitter, Instagram, Linkedin, Github, Send } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+
+const Footer = ({ className }: FooterProps) => {
   const navigation = {
     solutions: [
       { name: 'Web Hosting', href: '/services/hosting' },
@@ -37,7 +42,10 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#0B1120] border-t border-white/5">
+    <footer className={cn(
+      "w-full py-6 bg-[#0B1120]/80 backdrop-blur-md border-t border-white/5",
+      className
+    )}>
       <div className="container mx-auto px-6 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Section */}

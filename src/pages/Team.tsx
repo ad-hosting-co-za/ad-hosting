@@ -76,7 +76,7 @@ const values = [
 
 const Team = () => {
   return (
-    <div className="min-h-screen bg-[#0B1120] text-white">
+    <div className="min-h-screen text-white">
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16">
         <motion.div
@@ -120,10 +120,10 @@ const Team = () => {
                   <p className="text-blue-400 mb-2">{member.role}</p>
                   <p className="text-white/60 mb-4">{member.bio}</p>
                   <div className="flex gap-4">
-                    <a href={member.linkedin} className="text-white/60 hover:text-blue-400">
+                    <a href={member.linkedin} className="text-white/60 hover:text-blue-400" title={`Connect with ${member.name} on LinkedIn`}>
                       <Linkedin className="h-5 w-5" />
                     </a>
-                    <a href={`mailto:${member.name.toLowerCase().replace(' ', '.')}@company.com`} className="text-white/60 hover:text-blue-400">
+                    <a href={`mailto:${member.name.toLowerCase().replace(' ', '.')}@company.com`} className="text-white/60 hover:text-blue-400" title={`Email ${member.name}`}>
                       <Mail className="h-5 w-5" />
                     </a>
                   </div>

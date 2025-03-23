@@ -33,20 +33,13 @@ const testimonials = [
 const Testimonials = () => {
   return (
     <section className="relative py-20 overflow-hidden" id="testimonials">
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 to-background z-10"></div>
-        <div className="absolute top-0 left-0 w-full h-56 bg-accent/5"></div>
-      </div>
-
-      <Container className="relative z-20">
-        <Reveal delay={100}>
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Don't just take our word for it — hear from some of our satisfied clients
-            </p>
-          </div>
-        </Reveal>
+      <div className="container relative z-20">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">What Our Clients Say</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Don't just take our word for it — hear from some of our satisfied clients
+          </p>
+        </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {testimonials.map((testimonial, index) => (
@@ -86,7 +79,7 @@ const Testimonials = () => {
             </Reveal>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 };

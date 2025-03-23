@@ -4,44 +4,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Brand Colors */
-  --primary: #3B82F6;
-  --primary-dark: #2563EB;
-  --secondary: #8B5CF6;
-  --accent: #10B981;
-  
-  /* Neutral Colors */
-  --background: #0B1120;
-  --foreground: #FFFFFF;
-  
-  /* UI Colors */
-  --card: #1A1F2E;
-  --card-hover: #242B3D;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.05);
-  --ring: #3B82F6;
-  
-  /* Text Colors */
-  --text-primary: #FFFFFF;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --text-muted: rgba(255, 255, 255, 0.5);
-  
-  /* Status Colors */
-  --success: #10B981;
-  --warning: #F59E0B;
-  --error: #EF4444;
-  --info: #3B82F6;
-}
-
 @layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+
+  html, body {
+    @apply min-h-screen;
+    margin: 0;
+    padding: 0;
+  }
+
   body {
-    @apply bg-background text-text-primary antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    background-image: 
-      radial-gradient(circle at 100% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 0% 100%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    @apply bg-[#0B1120] text-white;
+    background-image: url('/bACKGROUND WEB.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
+    min-height: 100vh;
+    width: 100%;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   h1, h2, h3, h4, h5, h6 {
