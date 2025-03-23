@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -13,7 +15,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
 const Auth = () => {
-  const { user, signIn, signUp, isLoading } = useAuth();
+  const { user, login, register, isLoading } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +27,7 @@ const Auth = () => {
 
   // Redirect if already logged in
   if (user && !isLoading) {
-    return <Navigate to="/" />;
+    return <Navigate to="/dashboard" />;
   }
 
   const validateEmail = (email: string) => {
@@ -61,9 +63,13 @@ const Auth = () => {
 
     setAuthLoading(true);
     try {
-      await signIn(email, password);
-      navigate("/");
+      const { error: loginError } = await login(email, password);
+      if (loginError) {
+        throw loginError;
+      }
+      navigate("/dashboard");
     } catch (error: any) {
+      console.error('Login error:', error);
       setError(error.message || "Failed to sign in. Please check your credentials.");
     } finally {
       setAuthLoading(false);
@@ -96,12 +102,16 @@ const Auth = () => {
 
     setAuthLoading(true);
     try {
-      await signUp(email, password);
+      const { error: registerError } = await register(email, password, email.split('@')[0]);
+      if (registerError) {
+        throw registerError;
+      }
       setSuccess("Registration successful! Please check your email for a confirmation link.");
       // Clear sensitive data
       setPassword("");
       setConfirmPassword("");
     } catch (error: any) {
+      console.error('Registration error:', error);
       setError(error.message || "Failed to create account. Please try again.");
     } finally {
       setAuthLoading(false);

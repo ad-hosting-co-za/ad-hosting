@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import { useNavigate, Route, Routes } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -8,14 +10,10 @@ import CampaignsPage from '@/pages/dashboard/Campaigns';
 import CreateCampaignPage from '@/pages/dashboard/CreateCampaign';
 import EditCampaignPage from '@/pages/dashboard/EditCampaign';
 import CampaignDetails from '@/pages/dashboard/CampaignDetails';
+import { Loader2 } from 'lucide-react';
 
 const DashboardIndex = () => {
-  // Show nothing while checking authentication
-  return (
-    <DashboardLayout title="Dashboard">
-      <DashboardWelcome />
-    </DashboardLayout>
-  );
+  return <DashboardWelcome />;
 };
 
 const Dashboard = () => {
@@ -23,27 +21,34 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Redirect to login if not authenticated and not loading
     if (!isLoading && !user) {
       navigate('/auth');
     }
   }, [user, isLoading, navigate]);
 
-  // Show nothing while checking authentication
   if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (!user) {
     return null;
   }
 
-  // Protected content only shown to authenticated users
   return (
-    <Routes>
-      <Route index element={<DashboardIndex />} />
-      <Route path="profile" element={<ProfilePage />} />
-      <Route path="campaigns" element={<CampaignsPage />} />
-      <Route path="campaigns/new" element={<CreateCampaignPage />} />
-      <Route path="campaigns/:id" element={<CampaignDetails />} />
-      <Route path="campaigns/edit/:id" element={<EditCampaignPage />} />
-    </Routes>
+    <DashboardLayout>
+      <Routes>
+        <Route index element={<DashboardIndex />} />
+        <Route path="profile" element={<ProfilePage />} />
+        <Route path="campaigns" element={<CampaignsPage />} />
+        <Route path="campaigns/new" element={<CreateCampaignPage />} />
+        <Route path="campaigns/:id" element={<CampaignDetails />} />
+        <Route path="campaigns/edit/:id" element={<EditCampaignPage />} />
+      </Routes>
+    </DashboardLayout>
   );
 };
 
