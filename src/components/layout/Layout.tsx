@@ -42,7 +42,7 @@ const Layout = ({ children, className }: LayoutProps) => {
       />
       
       <main className={cn(
-        'flex-1',
+        'flex-1 pt-32',
         className
       )}>
         <ScrollArea className="h-full">

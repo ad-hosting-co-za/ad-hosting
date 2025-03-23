@@ -136,17 +136,11 @@ const Header = ({ className }: HeaderProps) => {
         {/* Actions */}
         <div className="flex items-center gap-6">
           {/* Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center">
             <Button
-              variant="ghost"
-              className="text-white/80 hover:text-blue-400 hover:bg-white/5"
+              className="bg-blue-500 hover:bg-blue-600 text-white font-medium shadow-lg"
             >
               <Link to="/auth?mode=sign-in">Sign In</Link>
-            </Button>
-            <Button
-              className="bg-blue-500 hover:bg-blue-600 text-white"
-            >
-              <Link to="/auth?mode=sign-up">Get Started</Link>
             </Button>
           </div>
 
