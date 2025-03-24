@@ -8,144 +8,108 @@ interface ValidationError {
   message: string;
 }
 
-interface UseFormValidationProps<T> {
-  schema: z.ZodSchema<T>;
+interface UseFormValidationOptions<T> {
   initialValues: T;
+  validationSchema: z.ZodType<T>;
   onSubmit: (values: T) => Promise<void>;
 }
 
 export function useFormValidation<T extends Record<string, any>>({
-  schema,
   initialValues,
-  onSubmit,
-}: UseFormValidationProps<T>) {
+  validationSchema,
+  onSubmit
+}: UseFormValidationOptions<T>) {
   const [values, setValues] = useState<T>(initialValues);
-  const [errors, setErrors] = useState<ValidationError[]>([]);
+  const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const { name, value } = e.target;
-      setValues((prev) => ({ ...prev, [name]: value }));
-      setTouched((prev) => ({ ...prev, [name]: true }));
-    },
-    []
-  );
+  const handleChange = useCallback((
+    name: keyof T,
+    value: T[keyof T]
+  ) => {
+    setValues(prev => ({ ...prev, [name]: value }));
+    // Clear error when field is modified
+    setErrors(prev => ({ ...prev, [name]: undefined }));
+  }, []);
 
-  const handleBlur = useCallback(
-    (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-      const { name } = e.target;
-      setTouched((prev) => ({ ...prev, [name]: true }));
-    },
-    []
-  );
-
-  const validateField = useCallback(
-    (name: string, value: any) => {
-      try {
-        schema.shape[name].parse(value);
-        setErrors((prev) => prev.filter((error) => error.field !== name));
-        return true;
-      } catch (error) {
-        if (error instanceof z.ZodError) {
-          setErrors((prev) => [
-            ...prev.filter((e) => e.field !== name),
-            {
-              field: name,
-              message: error.errors[0].message,
-            },
-          ]);
-        }
-        return false;
-      }
-    },
-    [schema]
-  );
-
-  const validateForm = useCallback(() => {
+  const validateField = useCallback((
+    name: keyof T,
+    value: T[keyof T]
+  ) => {
     try {
-      schema.parse(values);
-      setErrors([]);
+      const fieldSchema = z.object({ [name]: validationSchema.shape[name] });
+      fieldSchema.parse({ [name]: value });
+      setErrors(prev => ({ ...prev, [name]: undefined }));
       return true;
     } catch (error) {
       if (error instanceof z.ZodError) {
-        const newErrors = error.errors.map((err) => ({
-          field: err.path.join('.'),
-          message: err.message,
+        const fieldError = error.errors.find(err => err.path[0] === name);
+        setErrors(prev => ({ 
+          ...prev, 
+          [name]: fieldError?.message || 'Invalid value'
         }));
-        setErrors(newErrors);
       }
       return false;
     }
-  }, [schema, values]);
+  }, [validationSchema]);
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
-      e.preventDefault();
-      
-      if (!validateForm()) {
-        return;
-      }
+  const handleBlur = useCallback((name: keyof T) => {
+    validateField(name, values[name]);
+  }, [validateField, values]);
 
-      setIsSubmitting(true);
-      try {
-        await onSubmit(values);
-      } catch (error) {
-        console.error('Form submission failed:', error);
-      } finally {
-        setIsSubmitting(false);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const validatedData = validationSchema.parse(values);
+      await onSubmit(validatedData);
+      // Reset form after successful submission if needed
+      // setValues(initialValues);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        const newErrors: Partial<Record<keyof T, string>> = {};
+        error.errors.forEach(err => {
+          const field = err.path[0] as keyof T;
+          newErrors[field] = err.message;
+        });
+        setErrors(newErrors);
       }
-    },
-    [values, validateForm, onSubmit]
-  );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const resetForm = useCallback(() => {
     setValues(initialValues);
-    setErrors([]);
-    setTouched({});
+    setErrors({});
   }, [initialValues]);
-
-  const getFieldError = useCallback(
-    (name: string) => {
-      return errors.find((error) => error.field === name)?.message;
-    },
-    [errors]
-  );
-
-  const isFieldTouched = useCallback(
-    (name: string) => {
-      return touched[name] || false;
-    },
-    [touched]
-  );
-
-  const sanitizeInput = useCallback((value: string) => {
-    // Basic XSS prevention
-    return value
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }, []);
 
   return {
     values,
     errors,
     isSubmitting,
-    touched,
     handleChange,
     handleBlur,
     handleSubmit,
     resetForm,
-    validateField,
-    validateForm,
-    getFieldError,
-    isFieldTouched,
-    sanitizeInput,
+    validateField
   };
 }
+
+// Example usage:
+// const schema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(8)
+// });
+//
+// const { values, errors, handleSubmit, handleChange } = useFormValidation({
+//   initialValues: { email: '', password: '' },
+//   validationSchema: schema,
+//   onSubmit: async (values) => {
+//     await api.auth.login(values);
+//   }
+// });
 
 // Example usage:
 /*
@@ -156,12 +120,12 @@ const schema = z.object({
 });
 
 const form = useFormValidation({
-  schema,
   initialValues: {
     email: '',
     password: '',
     name: '',
   },
+  validationSchema: schema,
   onSubmit: async (values) => {
     // Handle form submission
     console.log(values);

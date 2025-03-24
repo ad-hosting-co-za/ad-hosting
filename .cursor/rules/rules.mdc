@@ -1,0 +1,1819 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+{
+
+  "rules": [
+
+    {
+
+      "name": "Project Structure",
+
+      "description": "Maintain consistent project structure and file organization",
+
+      "patterns": [
+
+        "app/**/*",
+
+        "functions/**/*",
+
+        "public/**/*",
+
+        "types/**/*"
+
+      ],
+
+      "rules": [
+
+        "Keep all React components in app/components",
+
+        "Place server-side code in app/lib/.server",
+
+        "Put client-side utilities in app/lib/.client",
+
+        "Store types in app/types or types/",
+
+        "Keep static assets in public/",
+
+        "Place API routes in functions/"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Code Style",
+
+      "description": "Enforce consistent code style and patterns",
+
+      "patterns": ["**/*.{ts,tsx}"],
+
+      "rules": [
+
+        "Use TypeScript for all new files",
+
+        "Follow the project's ESLint and Prettier configurations",
+
+        "Use single quotes for strings",
+
+        "Max line length: 120 characters",
+
+        "Use 2 spaces for indentation",
+
+        "Use relative imports with '~/' prefix",
+
+        "Include proper type definitions for all functions and variables"
+
+      ]
+
+    },
+
+    {
+
+      "name": "AI Integration",
+
+      "description": "Maintain consistent AI model integration patterns",
+
+      "patterns": ["app/lib/.server/llm/**/*"],
+
+      "rules": [
+
+        "Keep all AI model configurations in app/lib/.server/llm",
+
+        "Use environment variables for API keys",
+
+        "Implement proper error handling for API calls",
+
+        "Include rate limiting and error retries",
+
+        "Document model-specific configurations"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Error Handling",
+
+      "description": "Enforce consistent error handling patterns",
+
+      "patterns": ["**/*.{ts,tsx}"],
+
+      "rules": [
+
+        "Use try/catch blocks for async operations",
+
+        "Implement proper error boundaries in React components",
+
+        "Log errors with appropriate context",
+
+        "Handle API errors gracefully",
+
+        "Provide user-friendly error messages"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Component Structure",
+
+      "description": "Maintain consistent React component patterns",
+
+      "patterns": ["app/components/**/*"],
+
+      "rules": [
+
+        "Use functional components with TypeScript",
+
+        "Implement proper prop types",
+
+        "Keep components focused and single-responsibility",
+
+        "Use proper naming conventions (PascalCase for components)",
+
+        "Include JSDoc comments for complex components"
+
+      ]
+
+    },
+
+    {
+
+      "name": "State Management",
+
+      "description": "Enforce consistent state management patterns",
+
+      "patterns": ["app/**/*.{ts,tsx}"],
+
+      "rules": [
+
+        "Use React hooks for local state",
+
+        "Implement proper loading states",
+
+        "Handle state updates immutably",
+
+        "Use proper state initialization",
+
+        "Document complex state logic"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Testing",
+
+      "description": "Maintain consistent testing patterns",
+
+      "patterns": ["**/*.test.{ts,tsx}"],
+
+      "patterns": ["**/*.spec.{ts,tsx}"],
+
+      "rules": [
+
+        "Write tests for all new features",
+
+        "Use Vitest for unit tests",
+
+        "Include proper test descriptions",
+
+        "Mock external dependencies",
+
+        "Test error cases and edge conditions"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Security",
+
+      "description": "Enforce security best practices",
+
+      "patterns": ["**/*.{ts,tsx}"],
+
+      "rules": [
+
+        "Never expose API keys in client code",
+
+        "Sanitize user inputs",
+
+        "Implement proper authentication checks",
+
+        "Use secure HTTP headers",
+
+        "Handle sensitive data appropriately"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Supabase Integration",
+
+      "description": "Enforce consistent Supabase integration patterns and best practices",
+
+      "patterns": [
+
+        "app/lib/.server/supabase/**/*",
+
+        "app/lib/.client/supabase/**/*",
+
+        "functions/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use environment variables for Supabase URL and anon key",
+
+        "Implement proper error handling for Supabase operations",
+
+        "Use TypeScript types from Supabase client",
+
+        "Follow RLS (Row Level Security) best practices",
+
+        "Use proper database schema naming conventions",
+
+        "Implement proper connection pooling",
+
+        "Handle Supabase realtime subscriptions cleanup",
+
+        "Use proper error types from @supabase/supabase-js",
+
+        "Implement proper retry logic for failed operations",
+
+        "Use proper transaction handling for multi-step operations",
+
+        "Follow Supabase's recommended security practices",
+
+        "Use proper database indexes for performance",
+
+        "Implement proper connection error handling",
+
+        "Use proper type safety with Supabase queries",
+
+        "Follow Supabase's recommended caching strategies"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Database Schema",
+
+      "description": "Enforce consistent database schema patterns",
+
+      "patterns": [
+
+        "app/lib/.server/supabase/schema/**/*",
+
+        "functions/supabase/schema/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use snake_case for table and column names",
+
+        "Include proper foreign key constraints",
+
+        "Add appropriate indexes for frequently queried columns",
+
+        "Use proper data types for columns",
+
+        "Include proper timestamps (created_at, updated_at)",
+
+        "Use proper enum types for fixed values",
+
+        "Include proper check constraints",
+
+        "Use proper cascade delete rules",
+
+        "Include proper unique constraints",
+
+        "Use proper default values"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Row Level Security",
+
+      "description": "Enforce proper RLS policies",
+
+      "patterns": [
+
+        "app/lib/.server/supabase/policies/**/*",
+
+        "functions/supabase/policies/**/*"
+
+      ],
+
+      "rules": [
+
+        "Enable RLS on all tables by default",
+
+        "Use proper policy naming conventions",
+
+        "Include proper policy descriptions",
+
+        "Use proper policy conditions",
+
+        "Implement proper role-based access control",
+
+        "Use proper policy combinations",
+
+        "Include proper policy testing",
+
+        "Use proper policy inheritance",
+
+        "Implement proper policy debugging",
+
+        "Use proper policy documentation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Supabase Functions",
+
+      "description": "Enforce proper Edge Function patterns",
+
+      "patterns": [
+
+        "functions/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use proper function naming conventions",
+
+        "Include proper function documentation",
+
+        "Use proper error handling",
+
+        "Implement proper logging",
+
+        "Use proper environment variables",
+
+        "Include proper function testing",
+
+        "Use proper function deployment",
+
+        "Implement proper function monitoring",
+
+        "Use proper function security",
+
+        "Include proper function versioning"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Backend Development",
+
+      "description": "Enforce comprehensive backend development patterns",
+
+      "patterns": [
+
+        "app/lib/.server/**/*",
+
+        "functions/**/*",
+
+        "api/**/*"
+
+      ],
+
+      "rules": [
+
+        "Generate complete, functional backend codebase",
+
+        "Include all necessary configuration files",
+
+        "Implement proper directory structure",
+
+        "Ensure all dependencies are properly declared",
+
+        "Include comprehensive error handling",
+
+        "Implement proper logging and monitoring",
+
+        "Use proper security practices",
+
+        "Include proper API documentation",
+
+        "Implement proper testing infrastructure",
+
+        "Ensure code is production-ready"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Project Generation",
+
+      "description": "Enforce comprehensive project generation patterns",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Generate complete project structure",
+
+        "Include all necessary configuration files",
+
+        "Implement proper dependency management",
+
+        "Include comprehensive documentation",
+
+        "Ensure proper environment setup",
+
+        "Include proper testing setup",
+
+        "Implement proper CI/CD configuration",
+
+        "Include proper security configurations",
+
+        "Ensure proper deployment setup",
+
+        "Include proper monitoring setup"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Documentation",
+
+      "description": "Enforce comprehensive documentation practices",
+
+      "patterns": [
+
+        "docs/**/*",
+
+        "**/*.md"
+
+      ],
+
+      "rules": [
+
+        "Update documentation immediately after implementation",
+
+        "Use structured formatting in docs/ folder",
+
+        "Include clear explanations of changes",
+
+        "Provide code snippets and examples",
+
+        "Maintain consistency with existing documentation",
+
+        "Auto-generate project-specific README.md",
+
+        "Include proper API documentation",
+
+        "Document all configuration options",
+
+        "Include setup and deployment instructions",
+
+        "Document all environment variables"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Quality Assurance",
+
+      "description": "Enforce comprehensive quality assurance practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Double-check all work before submission",
+
+        "Verify environment setup before proceeding",
+
+        "State assumptions explicitly",
+
+        "Ensure coding standards compliance",
+
+        "Verify linting and formatting",
+
+        "Perform comprehensive testing",
+
+        "Check for security vulnerabilities",
+
+        "Verify dependency compatibility",
+
+        "Ensure proper error handling",
+
+        "Validate all configurations"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Implementation Workflow",
+
+      "description": "Enforce structured implementation workflow",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Analyze user requests thoroughly",
+
+        "Review project context",
+
+        "Perform impact analysis",
+
+        "Verify tooling and dependencies",
+
+        "Create detailed implementation plan",
+
+        "Write clean, optimized code",
+
+        "Manage dependencies properly",
+
+        "Update documentation iteratively",
+
+        "Perform thorough testing",
+
+        "Communicate changes clearly"
+
+      ]
+
+    },
+
+    {
+
+      "name": "UI Framework Integration",
+
+      "description": "Enforce proper UI framework integration",
+
+      "patterns": [
+
+        "app/components/**/*",
+
+        "app/styles/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use Tailwind CSS for styling",
+
+        "Integrate shadcn/ui components",
+
+        "Use lucide-react for icons",
+
+        "Implement Recharts for data visualization",
+
+        "Use responsive grid layouts",
+
+        "Ensure proper accessibility",
+
+        "Support dark/light mode",
+
+        "Optimize image loading",
+
+        "Use semantic HTML structure",
+
+        "Implement proper component organization"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Asset Management",
+
+      "description": "Enforce proper asset management practices",
+
+      "patterns": [
+
+        "public/**/*",
+
+        "app/assets/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use royalty-free images from Unsplash",
+
+        "Utilize OpenGraph preview images",
+
+        "Implement proper image optimization",
+
+        "Use proper asset naming conventions",
+
+        "Implement proper caching strategies",
+
+        "Optimize asset loading",
+
+        "Handle asset errors gracefully",
+
+        "Use proper asset compression",
+
+        "Implement proper asset versioning",
+
+        "Document asset sources and licenses"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Security Best Practices",
+
+      "description": "Enforce comprehensive security practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Avoid hardcoded credentials",
+
+        "Use environment variables",
+
+        "Implement proper authentication",
+
+        "Use secure API authentication",
+
+        "Implement proper authorization",
+
+        "Handle sensitive data properly",
+
+        "Use proper encryption",
+
+        "Implement proper input validation",
+
+        "Use secure HTTP headers",
+
+        "Regular security audits"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Project Overview",
+
+      "description": "Enforce comprehensive project overview and principles",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Prioritize automated solutions to reduce manual configuration",
+
+        "Engage users only when necessary with clear, brief prompts",
+
+        "Follow industry standards for security, performance, and scalability",
+
+        "Maintain clear project documentation",
+
+        "Ensure proper project structure",
+
+        "Implement proper version control practices",
+
+        "Follow consistent coding standards",
+
+        "Maintain proper dependency management",
+
+        "Ensure proper testing coverage",
+
+        "Implement proper deployment strategies"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Backend Detection",
+
+      "description": "Enforce automated backend detection and integration",
+
+      "patterns": [
+
+        "app/lib/.server/**/*",
+
+        "functions/**/*",
+
+        "api/**/*"
+
+      ],
+
+      "rules": [
+
+        "Analyze project requirements for backend selection",
+
+        "Consider scalability and integration factors",
+
+        "Recommend suitable backend services",
+
+        "Handle user credentials securely",
+
+        "Configure environment variables properly",
+
+        "Set up proper authentication",
+
+        "Implement proper API endpoints",
+
+        "Handle CORS settings appropriately",
+
+        "Configure real-time updates",
+
+        "Implement proper error handling"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Frontend-Backend Sync",
+
+      "description": "Enforce proper frontend-backend synchronization",
+
+      "patterns": [
+
+        "app/**/*",
+
+        "functions/**/*"
+
+      ],
+
+      "rules": [
+
+        "Ensure effective component-backend communication",
+
+        "Implement proper data fetching methods",
+
+        "Handle real-time data synchronization",
+
+        "Configure WebSocket connections properly",
+
+        "Implement proper state management",
+
+        "Handle loading and error states",
+
+        "Implement proper caching strategies",
+
+        "Use proper API response handling",
+
+        "Implement proper retry logic",
+
+        "Handle offline scenarios"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Error Management",
+
+      "description": "Enforce comprehensive error handling and debugging",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Implement comprehensive error handling",
+
+        "Log errors with sufficient detail",
+
+        "Set up automated testing",
+
+        "Follow test-driven development practices",
+
+        "Implement proper error boundaries",
+
+        "Handle API errors gracefully",
+
+        "Provide user-friendly error messages",
+
+        "Implement proper logging strategies",
+
+        "Set up error monitoring",
+
+        "Implement proper debugging tools"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Data Protection",
+
+      "description": "Enforce comprehensive data protection practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Ensure encrypted data transmission",
+
+        "Store sensitive information securely",
+
+        "Implement proper access controls",
+
+        "Validate and sanitize user inputs",
+
+        "Use proper authentication methods",
+
+        "Implement proper session management",
+
+        "Handle sensitive data properly",
+
+        "Use proper encryption methods",
+
+        "Implement proper backup strategies",
+
+        "Follow data protection regulations"
+
+      ]
+
+    },
+
+    {
+
+      "name": "User Guidance",
+
+      "description": "Enforce comprehensive user guidance and documentation",
+
+      "patterns": [
+
+        "docs/**/*",
+
+        "**/*.md"
+
+      ],
+
+      "rules": [
+
+        "Maintain up-to-date documentation",
+
+        "Provide clear setup instructions",
+
+        "Include deployment guidelines",
+
+        "Document troubleshooting steps",
+
+        "Provide relevant resource links",
+
+        "Include configuration guides",
+
+        "Document API endpoints",
+
+        "Provide usage examples",
+
+        "Include security guidelines",
+
+        "Document best practices"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Continuous Improvement",
+
+      "description": "Enforce continuous improvement practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Encourage user feedback",
+
+        "Refine automation scripts",
+
+        "Update configurations regularly",
+
+        "Monitor service updates",
+
+        "Ensure framework compatibility",
+
+        "Implement performance optimizations",
+
+        "Update security measures",
+
+        "Improve documentation",
+
+        "Enhance testing coverage",
+
+        "Optimize development workflow"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Automation Scripts",
+
+      "description": "Enforce proper automation script development",
+
+      "patterns": [
+
+        "scripts/**/*",
+
+        "automation/**/*"
+
+      ],
+
+      "rules": [
+
+        "Develop clear automation scripts",
+
+        "Handle backend service detection",
+
+        "Manage user credential prompts",
+
+        "Apply configurations automatically",
+
+        "Implement proper error handling",
+
+        "Include proper logging",
+
+        "Handle edge cases",
+
+        "Provide clear user feedback",
+
+        "Include proper validation",
+
+        "Document script functionality"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Design Aesthetics",
+
+      "description": "Enforce beautiful, production-ready design patterns",
+
+      "patterns": [
+
+        "app/components/**/*",
+
+        "app/styles/**/*",
+
+        "app/routes/**/*"
+
+      ],
+
+      "rules": [
+
+        "Create unique, visually appealing designs",
+
+        "Avoid cookie-cutter layouts and components",
+
+        "Implement proper visual hierarchy",
+
+        "Use appropriate spacing and typography",
+
+        "Ensure consistent color schemes",
+
+        "Add meaningful animations and transitions",
+
+        "Optimize for visual performance",
+
+        "Ensure responsive design across all breakpoints",
+
+        "Implement proper dark/light mode support",
+
+        "Use high-quality, optimized images"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Next.js Client Components",
+
+      "description": "Enforce proper Next.js client component patterns",
+
+      "patterns": [
+
+        "app/**/*.{tsx,jsx}"
+
+      ],
+
+      "rules": [
+
+        "Add 'use client' directive for components using client-side hooks",
+
+        "Place 'use client' directive at the top of the file",
+
+        "Separate client and server components properly",
+
+        "Handle client-side state appropriately",
+
+        "Implement proper loading states",
+
+        "Handle client-side errors gracefully",
+
+        "Use proper client-side routing",
+
+        "Implement proper client-side data fetching",
+
+        "Handle client-side form submissions",
+
+        "Manage client-side authentication state"
+
+      ]
+
+    },
+
+    {
+
+      "name": "UI Component Usage",
+
+      "description": "Enforce proper UI component and library usage",
+
+      "patterns": [
+
+        "app/components/**/*",
+
+        "app/styles/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use Tailwind CSS for styling",
+
+        "Utilize shadcn/ui components",
+
+        "Use Lucide React for icons",
+
+        "Avoid installing unnecessary UI packages",
+
+        "Handle server/client component attributes properly",
+
+        "Use proper className patterns",
+
+        "Implement proper style handling",
+
+        "Use proper component composition",
+
+        "Handle dynamic styles correctly",
+
+        "Implement proper responsive design"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Image and Asset Usage",
+
+      "description": "Enforce proper image and asset handling",
+
+      "patterns": [
+
+        "app/**/*.{tsx,jsx}",
+
+        "public/**/*"
+
+      ],
+
+      "rules": [
+
+        "Use Lucide React icons for logos",
+
+        "Use verified Unsplash image URLs",
+
+        "Implement proper image optimization",
+
+        "Use proper image formats and sizes",
+
+        "Implement proper lazy loading",
+
+        "Handle image loading states",
+
+        "Implement proper error handling for images",
+
+        "Use proper image alt text",
+
+        "Implement proper image caching",
+
+        "Handle responsive images properly"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Server/Client Attributes",
+
+      "description": "Enforce proper handling of server/client attributes",
+
+      "patterns": [
+
+        "app/**/*.{tsx,jsx}"
+
+      ],
+
+      "rules": [
+
+        "Avoid extra attributes from server",
+
+        "Handle className conflicts properly",
+
+        "Manage style attribute conflicts",
+
+        "Use proper attribute merging",
+
+        "Handle dynamic attributes correctly",
+
+        "Implement proper hydration handling",
+
+        "Use proper client-side attribute updates",
+
+        "Handle server-side rendering attributes",
+
+        "Manage attribute inheritance properly",
+
+        "Implement proper attribute validation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Liability Management",
+
+      "description": "Enforce proper liability and responsibility handling",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Clearly document assumptions and limitations",
+
+        "Implement proper error handling for all operations",
+
+        "Include appropriate disclaimers in documentation",
+
+        "Handle edge cases explicitly",
+
+        "Validate all user inputs thoroughly",
+
+        "Implement proper data validation",
+
+        "Include proper error messages and recovery steps",
+
+        "Document known limitations and workarounds",
+
+        "Implement proper fallback mechanisms",
+
+        "Include proper version compatibility checks"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Implementation Guidelines",
+
+      "description": "Enforce proper implementation practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Start with basic rules and gradually add complexity",
+
+        "Use natural language for rule descriptions",
+
+        "Prioritize critical rules first",
+
+        "Include examples where appropriate",
+
+        "Maintain consistency across rules",
+
+        "Cover multiple implementation aspects",
+
+        "Include project-specific context",
+
+        "Balance flexibility and strictness",
+
+        "Use proper rule inheritance",
+
+        "Implement proper rule validation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Rule Management",
+
+      "description": "Enforce proper rule management practices",
+
+      "patterns": [
+
+        ".cursor/**/*",
+
+        "**/*.mdc"
+
+      ],
+
+      "rules": [
+
+        "Keep rules in .cursor/rules directory",
+
+        "Use proper rule file naming conventions",
+
+        "Include proper rule descriptions",
+
+        "Use proper glob patterns",
+
+        "Implement proper rule versioning",
+
+        "Document rule dependencies",
+
+        "Include rule examples",
+
+        "Maintain rule documentation",
+
+        "Implement proper rule testing",
+
+        "Handle rule conflicts properly"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Project Context",
+
+      "description": "Enforce proper project context handling",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Read project information from @projectinfo.mdc",
+
+        "Include proper project structure context",
+
+        "Document project-specific requirements",
+
+        "Include proper dependency context",
+
+        "Document project limitations",
+
+        "Include proper environment context",
+
+        "Document project assumptions",
+
+        "Include proper version context",
+
+        "Document project constraints",
+
+        "Include proper security context"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Rule Application",
+
+      "description": "Enforce proper rule application practices",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Apply rules based on file patterns",
+
+        "Handle rule conflicts properly",
+
+        "Implement proper rule inheritance",
+
+        "Use proper rule priority",
+
+        "Handle rule exceptions properly",
+
+        "Implement proper rule validation",
+
+        "Use proper rule composition",
+
+        "Handle rule dependencies properly",
+
+        "Implement proper rule testing",
+
+        "Document rule application process"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Rule Documentation",
+
+      "description": "Enforce proper rule documentation practices",
+
+      "patterns": [
+
+        ".cursor/**/*",
+
+        "**/*.md"
+
+      ],
+
+      "rules": [
+
+        "Document rule purpose and scope",
+
+        "Include rule examples",
+
+        "Document rule dependencies",
+
+        "Include rule limitations",
+
+        "Document rule conflicts",
+
+        "Include rule best practices",
+
+        "Document rule updates",
+
+        "Include rule testing procedures",
+
+        "Document rule maintenance",
+
+        "Include rule troubleshooting guides"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Rule Testing",
+
+      "description": "Enforce proper rule testing practices",
+
+      "patterns": [
+
+        ".cursor/**/*",
+
+        "**/*.test.*"
+
+      ],
+
+      "rules": [
+
+        "Test rule application",
+
+        "Verify rule behavior",
+
+        "Test rule conflicts",
+
+        "Verify rule inheritance",
+
+        "Test rule exceptions",
+
+        "Verify rule validation",
+
+        "Test rule composition",
+
+        "Verify rule dependencies",
+
+        "Test rule performance",
+
+        "Verify rule documentation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Backend Integration",
+
+      "description": "Enforce automated backend integration and management",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Automatically detect and integrate with supported backends (Cloudflare, Supabase, Firebase)",
+
+        "Implement automatic CLI-based authentication for backend services",
+
+        "Set up proper environment variables and secrets management",
+
+        "Configure automatic pipeline setup from GitHub repositories",
+
+        "Implement proper backend service discovery and configuration",
+
+        "Handle backend-specific dependencies and requirements",
+
+        "Set up proper development and production environments",
+
+        "Configure proper logging and monitoring",
+
+        "Implement proper error handling and recovery",
+
+        "Manage backend service versions and updates"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Cloudflare Integration",
+
+      "description": "Enforce Cloudflare-specific integration patterns",
+
+      "patterns": [
+
+        "functions/**/*",
+
+        "wrangler.toml",
+
+        "**/*.worker.ts"
+
+      ],
+
+      "rules": [
+
+        "Use proper Cloudflare Workers configuration",
+
+        "Implement proper D1 database integration",
+
+        "Configure proper R2 storage integration",
+
+        "Set up proper KV storage integration",
+
+        "Implement proper Durable Objects",
+
+        "Configure proper Pages deployment",
+
+        "Set up proper Functions deployment",
+
+        "Implement proper Workers routing",
+
+        "Configure proper caching strategies",
+
+        "Set up proper security headers"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Supabase Integration",
+
+      "description": "Enforce Supabase-specific integration patterns",
+
+      "patterns": [
+
+        "app/lib/.server/supabase/**/*",
+
+        "functions/supabase/**/*"
+
+      ],
+
+      "rules": [
+
+        "Configure proper Supabase client initialization",
+
+        "Implement proper database schema management",
+
+        "Set up proper Row Level Security policies",
+
+        "Configure proper real-time subscriptions",
+
+        "Implement proper authentication flows",
+
+        "Set up proper storage bucket management",
+
+        "Configure proper Edge Functions",
+
+        "Implement proper database migrations",
+
+        "Set up proper backup strategies",
+
+        "Configure proper monitoring and logging"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Firebase Integration",
+
+      "description": "Enforce Firebase-specific integration patterns",
+
+      "patterns": [
+
+        "app/lib/.server/firebase/**/*",
+
+        "functions/firebase/**/*"
+
+      ],
+
+      "rules": [
+
+        "Configure proper Firebase initialization",
+
+        "Implement proper Firestore integration",
+
+        "Set up proper Firebase Authentication",
+
+        "Configure proper Firebase Storage",
+
+        "Implement proper Cloud Functions",
+
+        "Set up proper Firebase Hosting",
+
+        "Configure proper Firebase Analytics",
+
+        "Implement proper Firebase Performance Monitoring",
+
+        "Set up proper Firebase Crashlytics",
+
+        "Configure proper Firebase Remote Config"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Authentication Management",
+
+      "description": "Enforce automated authentication handling",
+
+      "patterns": [
+
+        "**/*"
+
+      ],
+
+      "rules": [
+
+        "Implement automatic CLI-based authentication",
+
+        "Handle secure credential storage",
+
+        "Configure proper session management",
+
+        "Implement proper token refresh",
+
+        "Set up proper OAuth flows",
+
+        "Configure proper SSO integration",
+
+        "Implement proper MFA support",
+
+        "Set up proper role-based access control",
+
+        "Configure proper API key management",
+
+        "Implement proper security headers"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Documentation Automation",
+
+      "description": "Enforce automated documentation management",
+
+      "patterns": [
+
+        "docs/**/*",
+
+        "**/*.md",
+
+        "**/*.mdc"
+
+      ],
+
+      "rules": [
+
+        "Automatically generate API documentation",
+
+        "Update documentation based on code changes",
+
+        "Generate proper OpenAPI/Swagger specs",
+
+        "Maintain proper changelog",
+
+        "Generate proper dependency documentation",
+
+        "Update proper setup instructions",
+
+        "Generate proper API examples",
+
+        "Maintain proper troubleshooting guides",
+
+        "Generate proper architecture diagrams",
+
+        "Update proper security documentation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "Pipeline Automation",
+
+      "description": "Enforce automated pipeline management",
+
+      "patterns": [
+
+        ".github/**/*",
+
+        "ci/**/*",
+
+        "**/pipeline.yml"
+
+      ],
+
+      "rules": [
+
+        "Automatically configure GitHub Actions",
+
+        "Set up proper CI/CD pipelines",
+
+        "Configure proper deployment workflows",
+
+        "Implement proper testing pipelines",
+
+        "Set up proper code quality checks",
+
+        "Configure proper dependency updates",
+
+        "Implement proper security scanning",
+
+        "Set up proper performance testing",
+
+        "Configure proper environment management",
+
+        "Implement proper release automation"
+
+      ]
+
+    },
+
+    {
+
+      "name": "IDE Integration",
+
+      "description": "Enforce proper IDE and Cursor integration",
+
+      "patterns": [
+
+        ".cursor/**/*",
+
+        ".vscode/**/*",
+
+        "**/*.json"
+
+      ],
+
+      "rules": [
+
+        "Configure proper IDE settings",
+
+        "Set up proper debugging configurations",
+
+        "Implement proper code completion",
+
+        "Configure proper linting integration",
+
+        "Set up proper formatting rules",
+
+        "Implement proper Git integration",
+
+        "Configure proper terminal integration",
+
+        "Set up proper extension management",
+
+        "Implement proper workspace management",
+
+        "Configure proper keyboard shortcuts"
+
+      ]
+
+    }
+
+  ]
+
+}
